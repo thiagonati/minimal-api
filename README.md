@@ -185,4 +185,4 @@ Você pode usar, modificar e distribuir livremente.
 
 📧 Contato: thiago@example.com
 
-🌍 Feito com ❤️ em .NET 8
+🌍 Feito com ❤️ em .NET 9
