@@ -7,7 +7,7 @@
 
 
 
-API RESTful minimalista desenvolvida com .NET 8, focada em boas práticas, testes automatizados e autenticação JWT.
+API RESTful minimalista desenvolvida com .NET 9, focada em boas práticas, testes automatizados e autenticação JWT.
 Este projeto implementa o CRUD completo de veículos, com integração de Swagger, mocks para testes e injeção de dependência.
 
 🧭 Sumário
