@@ -21,23 +21,28 @@ public class AdministradorRequestTest
     {
         Setup.ClassCleanup();
     }
-    
+
     [TestMethod]
-    public async Task TestarGetSetPropriedades()
+    public async Task Testar_Login_Administrador_Com_Sucesso()
     {
         // Arrange
-        var loginDTO = new LoginDTO{
+        var loginDTO = new LoginDTO
+        {
             Email = "adm@teste.com",
             Senha = "123456"
         };
 
-        var content = new StringContent(JsonSerializer.Serialize(loginDTO), Encoding.UTF8,  "Application/json");
+        var content = new StringContent(
+            JsonSerializer.Serialize(loginDTO),
+            Encoding.UTF8,
+            "application/json"
+        );
 
         // Act
         var response = await Setup.client.PostAsync("/administradores/login", content);
 
         // Assert
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, "O login deve retornar 200 OK");
 
         var result = await response.Content.ReadAsStringAsync();
         var admLogado = JsonSerializer.Deserialize<AdministradorLogado>(result, new JsonSerializerOptions
@@ -45,10 +50,13 @@ public class AdministradorRequestTest
             PropertyNameCaseInsensitive = true
         });
 
-        Assert.IsNotNull(admLogado?.Email ?? "");
-        Assert.IsNotNull(admLogado?.Perfil ?? "");
-        Assert.IsNotNull(admLogado?.Token ?? "");
+        Assert.IsNotNull(admLogado, "O objeto AdministradorLogado não deve ser nulo");
+        Assert.IsFalse(string.IsNullOrEmpty(admLogado?.Email), "O e-mail não deve ser vazio");
+        Assert.IsFalse(string.IsNullOrEmpty(admLogado?.Perfil), "O perfil não deve ser vazio");
+        Assert.IsFalse(string.IsNullOrEmpty(admLogado?.Token), "O token não deve ser vazio");
 
-        Console.WriteLine(admLogado?.Token);
+        Console.WriteLine($"Token retornado: {admLogado?.Token}");
+
+        Setup.Token = admLogado!.Token;
     }
 }
